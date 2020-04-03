@@ -257,10 +257,8 @@ public abstract class WheelPicker<V> extends View {
     public void setDefaultDate(Date date) {
         if (adapter != null && adapter.getItemCount() > 0) {
             final int indexOfDate = findIndexOfDate(date);
-            if(indexOfDate >= 0) {
-                this.defaultValue = adapter.getData().get(indexOfDate);
-                setSelectedItemPosition(indexOfDate);
-            }
+            this.defaultValue = adapter.getData().get(indexOfDate);
+            setSelectedItemPosition(indexOfDate);
         }
     }
 
@@ -715,7 +713,7 @@ public abstract class WheelPicker<V> extends View {
     }
 
     public int getTodayItemPosition() {
-        return adapter.getData().indexOf(getLocalizedString(R.string.picker_today));
+        return adapter.getData().indexOf(new DateWithLabel(getLocalizedString(R.string.picker_today), new Date()));
     }
 
     public void setAdapter(Adapter adapter) {

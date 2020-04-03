@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
-public class DateHelper {
+public final class DateHelper {
 
     private static TimeZone timeZone = TimeZone.getDefault();
 
@@ -19,7 +19,7 @@ public class DateHelper {
 
     public static Calendar getCalendarOfDate(Date date){
         final Calendar calendar = Calendar.getInstance(Locale.getDefault());
-        calendar.setTimeZone(timeZone);
+        calendar.setTimeZone(getTimeZone());
         calendar.setTime(date);
         calendar.set(Calendar.MILLISECOND, 0);
         calendar.set(Calendar.SECOND, 0);
@@ -48,7 +48,7 @@ public class DateHelper {
 
     public static Date today() {
         Calendar now  = Calendar.getInstance(Locale.getDefault());
-        now.setTimeZone(timeZone);
+        now.setTimeZone(getTimeZone());
         return now.getTime();
     }
 

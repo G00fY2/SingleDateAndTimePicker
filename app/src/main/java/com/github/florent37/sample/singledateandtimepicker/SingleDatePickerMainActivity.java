@@ -9,6 +9,8 @@ import java.util.Date;
 
 public class SingleDatePickerMainActivity extends AppCompatActivity {
 
+    private Toast toast;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +33,8 @@ public class SingleDatePickerMainActivity extends AppCompatActivity {
     }
 
     private void display(String toDisplay) {
-        Toast.makeText(this, toDisplay, Toast.LENGTH_SHORT).show();
+        if (toast != null) toast.cancel();
+        toast = Toast.makeText(this, toDisplay, Toast.LENGTH_SHORT);
+        toast.show();
     }
 }

@@ -5,7 +5,7 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
+import android.os.Build;
 import android.text.format.DateFormat;
 import android.util.AttributeSet;
 import android.view.View;
@@ -43,7 +43,6 @@ public class SingleDateAndTimePicker extends LinearLayout {
 
     private static final CharSequence FORMAT_24_HOUR = "EEE d MMM H:mm";
     private static final CharSequence FORMAT_12_HOUR = "EEE d MMM h:mm a";
-
 
     @NonNull
     private final WheelYearPicker yearsPicker;
@@ -563,9 +562,9 @@ public class SingleDateAndTimePicker extends LinearLayout {
 
         final Resources resources = getResources();
         setTodayText(new DateWithLabel(a.getString(R.styleable.SingleDateAndTimePicker_picker_todayText), new Date()));
-        setTextColor(a.getColor(R.styleable.SingleDateAndTimePicker_picker_textColor, ContextCompat.getColor(context, R.color.picker_default_text_color)));
-        setSelectedTextColor(a.getColor(R.styleable.SingleDateAndTimePicker_picker_selectedTextColor, ContextCompat.getColor(context, R.color.picker_default_selected_text_color)));
-        setSelectorColor(a.getColor(R.styleable.SingleDateAndTimePicker_picker_selectorColor, ContextCompat.getColor(context, R.color.picker_default_selector_color)));
+        setTextColor(a.getColor(R.styleable.SingleDateAndTimePicker_picker_textColor, getColor(context, R.color.picker_default_text_color)));
+        setSelectedTextColor(a.getColor(R.styleable.SingleDateAndTimePicker_picker_selectedTextColor, getColor(context, R.color.picker_default_selected_text_color)));
+        setSelectorColor(a.getColor(R.styleable.SingleDateAndTimePicker_picker_selectorColor, getColor(context, R.color.picker_default_selector_color)));
         setSelectorHeight(a.getDimensionPixelSize(R.styleable.SingleDateAndTimePicker_picker_selectorHeight, resources.getDimensionPixelSize(R.dimen.wheelSelectorHeight)));
         setTextSize(a.getDimensionPixelSize(R.styleable.SingleDateAndTimePicker_picker_textSize, resources.getDimensionPixelSize(R.dimen.WheelItemTextSize)));
         setCurved(a.getBoolean(R.styleable.SingleDateAndTimePicker_picker_curved, IS_CURVED_DEFAULT));
@@ -590,6 +589,15 @@ public class SingleDateAndTimePicker extends LinearLayout {
             Calendar now = Calendar.getInstance();
             now.setTimeZone(DateHelper.getTimeZone());
             updateDaysOfMonth(now);
+        }
+    }
+
+    private int getColor(Context context, int id) {
+        if (Build.VERSION.SDK_INT >= 23) {
+            return context.getColor(id);
+        } else {
+            //noinspection deprecation
+            return context.getResources().getColor(id);
         }
     }
 
